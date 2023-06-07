@@ -158,8 +158,8 @@ function doRectanglesOverlap(rect1, rect2) {
  *
  */
 function isInsideCircle(circle, point) {
-  // eslint-disable-next-line
-  const d = Math.sqrt(Math.pow((point.x - circle.center.x), 2) + Math.pow((point.y - circle.center.y), 2));
+  const d = Math.sqrt((point.x - circle.center.x) * (point.x - circle.center.x)
+    + (point.y - circle.center.y) * (point.y - circle.center.y));
   if (d < circle.radius) return true;
   return false;
 }
@@ -268,16 +268,16 @@ function reverseInteger(num) {
  *   4916123456789012 => false
  */
 function isCreditCardNumber(ccn) {
-  let digit; let digits; let flag; let sum; let j; let len;
-  flag = true;
+  let digit;
+  const ccnString = ccn.toString();
+  let sum;
+  const len = ccnString.length;
   sum = 0;
-  // eslint-disable-next-line
-  digits = (`${ccn}`).split('').reverse();
-  for (j = 0, len = digits.length; j < len; j += 1) {
+  const digits = ccnString.split('').reverse();
+  for (let j = 0; j < len; j += 1) {
     digit = digits[j];
     digit = parseInt(digit, 10);
-    // eslint-disable-next-line
-    if ((flag = !flag)) {
+    if ((j + 1) % 2 === 0) {
       digit *= 2;
     }
     if (digit > 9) {
@@ -302,10 +302,17 @@ function isCreditCardNumber(ccn) {
  *   10000 ( 1+0+0+0+0 = 1 ) => 1
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
-function getDigitalRoot(/* num */) {
-  throw new Error('Not implemented');
-}
+function getDigitalRoot(num) {
+  let sum = num;
+  let arr = [];
+  const reducer = (a, b) => parseInt(a, 10) + parseInt(b, 10);
 
+  while (sum > 9) {
+    arr = sum.toString().split('');
+    sum = arr.reduce(reducer);
+  }
+  return sum;
+}
 
 /**
  * Returns true if the specified string has the balanced brackets and false otherwise.
