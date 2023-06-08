@@ -335,8 +335,22 @@ function getDigitalRoot(num) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  if (str === '') return true;
+  const brackets = ['[]', '()', '{}', '<>'];
+  let processedStr = str;
+  let cleanedLength = 0;
+
+  while (cleanedLength !== processedStr.length) {
+    cleanedLength = processedStr.length;
+    for (let i = 0; i < brackets.length; i += 1) {
+      processedStr = processedStr.replaceAll(brackets[i], '');
+      // console.log(str);
+    }
+    if (processedStr.length === 0) return true;
+  }
+
+  return false;
 }
 
 
@@ -360,8 +374,14 @@ function isBracketsBalanced(/* str */) {
  *    365, 4  => '11231'
  *    365, 10 => '365'
  */
-function toNaryString(/* num, n */) {
-  throw new Error('Not implemented');
+function toNaryString(num, n) {
+  let processedNum = num;
+  let result = '';
+  while (processedNum > 0) {
+    result = (processedNum % n) + result;
+    processedNum = Math.floor(processedNum / n);
+  }
+  return result;
 }
 
 
@@ -377,8 +397,19 @@ function toNaryString(/* num, n */) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  const processedPathes = [];
+  pathes.forEach((element) => processedPathes.push(element.split('/')));
+  const result = processedPathes[0];
+  for (let i = 1; i < processedPathes.length; i += 1) {
+    for (let j = 0; j < result.length; j += 1) {
+      if (processedPathes[i][j] !== result[j]) {
+        result[j] = '';
+        result.splice(j + 1);
+      }
+    }
+  }
+  return result.join('/').toString();
 }
 
 
