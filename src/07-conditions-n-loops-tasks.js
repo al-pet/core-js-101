@@ -344,7 +344,7 @@ function isBracketsBalanced(str) {
   while (cleanedLength !== processedStr.length) {
     cleanedLength = processedStr.length;
     for (let i = 0; i < brackets.length; i += 1) {
-      processedStr = processedStr.replaceAll(brackets[i], '');
+      processedStr = processedStr.replace(brackets[i], '');
       // console.log(str);
     }
     if (processedStr.length === 0) return true;
