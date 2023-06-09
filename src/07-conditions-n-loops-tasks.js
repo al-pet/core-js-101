@@ -431,8 +431,25 @@ function getCommonDirectoryPath(pathes) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  const len1 = m1.length;
+  const len2 = m1[0].length;
+  const len3 = m2[0].length;
+  const result = Array(len1);
+  for (let i = 0; i < len1; i += 1) {
+    result[i] = [];
+    for (let j = 0; j < len3; j += 1) {
+      let res = 0;
+      for (let k = 0; k < len2; k += 1) {
+        res += m1[i][k] * m2[k][j];
+      }
+      result[i].push(res);
+    }
+  }
+  // result[0].push(m1[0][0] * m2[0][0] + m1[0][1] * m2[1][0] + m1[0][2] * m2[2][0]);
+  // result[0].push(m1[0][0] * m2[0][1] + m1[0][1] * m2[1][1] + m1[0][2] * m2[2][1]);
+  // result[0].push(m1[0][0] * m2[0][2] + m1[0][1] * m2[1][2] + m1[0][2] * m2[2][2]);
+  return result;
 }
 
 
@@ -466,8 +483,22 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(position) {
+  const p = position;
+  const winsLines = Array(8);
+  winsLines[0] = p[0][0] + p[0][1] + p[0][2];
+  winsLines[1] = p[1][0] + p[1][1] + p[1][2];
+  winsLines[2] = p[2][0] + p[2][1] + p[2][2];
+  winsLines[3] = p[0][0] + p[1][0] + p[2][0];
+  winsLines[4] = p[0][1] + p[1][1] + p[2][1];
+  winsLines[5] = p[0][2] + p[1][2] + p[2][2];
+  winsLines[6] = p[0][0] + p[1][1] + p[2][2];
+  winsLines[7] = p[0][2] + p[1][1] + p[2][0];
+  for (let i = 0; i < winsLines.length; i += 1) {
+    if (winsLines[i] === '000') return '0';
+    if (winsLines[i] === 'XXX') return 'X';
+  }
+  return undefined;
 }
 
 
